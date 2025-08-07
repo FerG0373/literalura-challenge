@@ -1,5 +1,6 @@
 package com.alura.literalura_challenge;
 
+import com.alura.literalura_challenge.service.ConsumoAPI;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,5 +15,7 @@ public class LiteraluraChallengeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("HOLA MUNDO");
+		var consumoApi = new ConsumoAPI();
+		var json = consumoApi.obtenerDatos("");
 	}
 }

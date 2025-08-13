@@ -1,7 +1,6 @@
 package com.alura.literalura_challenge;
 
 import com.alura.literalura_challenge.principal.Principal;
-import com.alura.literalura_challenge.service.ConsumoAPI;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +16,7 @@ public class LiteraluraChallengeApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		Principal principal = new Principal();
-		principal.muestraElMenu();
+		//principal.muestraElMenu();
+		principal.mostrarMenu();
 	}
 }

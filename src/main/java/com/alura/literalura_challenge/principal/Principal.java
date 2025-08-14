@@ -31,14 +31,38 @@ public class Principal {
                     .findFirst();
 
             if(libroBuscado.isPresent()) {
-                System.out.println("¡LIBRO ENCONTRADO!");
-                System.out.println(libroBuscado.get());
+                System.out.println("\n¡LIBRO ENCONTRADO!");
+                mostrarLibroFormateado(libroBuscado.get());
             } else {
                 System.out.println("Libro NO encontrado.");
             }
         } catch (Exception e) {
             System.out.println("Error al buscar el libro: " + e.getMessage());
         }
+    }
+
+    private void mostrarLibroFormateado(DatosLibro libro) {
+        System.out.println("--- LIBRO ---");
+        System.out.println("Título: " + libro.titulo());
+
+        // Formatear autores
+        if (!libro.autor().isEmpty()) {
+            System.out.println("Autor(es):");
+            libro.autor().forEach(autor -> {
+                System.out.println("  - " + autor.nombre() +
+                        " (" + autor.fechaDeNacimiento() +
+                        " - " + autor.fechaDeFallecimiento() + ")");
+            });
+        } else {
+            System.out.println("Autor: Desconocido");
+        }
+
+        // Formatear idiomas
+        System.out.println("Idioma(s): " + String.join(", ", libro.idiomas()));
+
+        // Formatear descargas
+        System.out.println("Número de descargas: " + libro.numeroDeDescargas());
+        System.out.println("---\n");
     }
 
 

@@ -1,7 +1,9 @@
 package com.alura.literalura_challenge.principal;
 
+import com.alura.literalura_challenge.model.Autor;
 import com.alura.literalura_challenge.model.DatosLibro;
 import com.alura.literalura_challenge.model.DatosRespuesta;
+import com.alura.literalura_challenge.model.Libro;
 import com.alura.literalura_challenge.service.ConsumoAPI;
 import com.alura.literalura_challenge.service.ConvierteDatos;
 
@@ -32,7 +34,12 @@ public class Principal {
 
             if(libroBuscado.isPresent()) {
                 System.out.println("\n¡LIBRO ENCONTRADO!");
-                mostrarLibroFormateado(libroBuscado.get());
+
+                Autor autor = new Autor(libroBuscado.get().autor().get(0));
+                Libro libro = new Libro(libroBuscado.get());
+                libro.setAutor(autor);
+
+                mostrarLibroFormateado(libro);
             } else {
                 System.out.println("Libro NO encontrado.");
             }
@@ -41,31 +48,24 @@ public class Principal {
         }
     }
 
-    private void mostrarLibroFormateado(DatosLibro libro) {
+    private void mostrarLibroFormateado(Libro libro) {
         System.out.println("--- LIBRO ---");
-        System.out.println("Título: " + libro.titulo());
+        System.out.println("Título: " + libro.getTitulo());
 
         // Formatear autores
-        if (!libro.autor().isEmpty()) {
-            System.out.println("Autor(es):");
-            libro.autor().forEach(autor -> {
-                System.out.println("  - " + autor.nombre() +
-                        " (" + autor.fechaDeNacimiento() +
-                        " - " + autor.fechaDeFallecimiento() + ")");
-            });
+        if (libro.getAutor() != null) {
+            System.out.println("Autor(es): " + libro.getAutor().getNombre() +
+                    " (" + libro.getAutor().getFechaDeNacimiento() +
+                    " - " + libro.getAutor().getFechaDeFallecimiento() + ")");
         } else {
             System.out.println("Autor: Desconocido");
         }
-
         // Formatear idiomas
-        System.out.println("Idioma(s): " + String.join(", ", libro.idioma()));
-
+        System.out.println("Idioma(s): " + libro.getIdioma());
         // Formatear descargas
-        System.out.println("Número de descargas: " + libro.numeroDeDescargas());
+        System.out.println("Número de descargas: " + libro.getNumeroDeDescargas());
         System.out.println("---\n");
     }
-
-
 
     public void muestraElMenu() {
         var opcion = -1;
@@ -106,5 +106,4 @@ public class Principal {
             }
         }
     }
-
 }

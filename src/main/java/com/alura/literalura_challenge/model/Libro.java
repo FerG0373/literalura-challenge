@@ -1,20 +1,20 @@
 package com.alura.literalura_challenge.model;
 
-import jakarta.persistence.*;
-
-
-@Entity
-@Table(name = "libros")
+//import jakarta.persistence.*;
+//
+//
+//@Entity
+//@Table(name = "libros")
 public class Libro {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    @Column(unique = true)
+    //@Column(unique = true)
     private String titulo;
 
     // Relación ManyToOne: muchos libros pueden tener un solo autor.
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "autor_id")
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "autor_id")
     private Autor autor;
 
     private String idioma;

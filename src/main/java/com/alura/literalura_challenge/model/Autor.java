@@ -1,13 +1,13 @@
 package com.alura.literalura_challenge.model;
 
-import jakarta.persistence.*;
-
-
-@Entity
-@Table(name = "autores")
+//import jakarta.persistence.*;
+//
+//
+//@Entity
+//@Table(name = "autores")
 public class Autor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String nombre;
     private Integer fechaDeNacimiento;

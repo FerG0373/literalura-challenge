@@ -58,12 +58,13 @@ public class Principal {
         }
 
         // Formatear idiomas
-        System.out.println("Idioma(s): " + String.join(", ", libro.idiomas()));
+        System.out.println("Idioma(s): " + String.join(", ", libro.idioma()));
 
         // Formatear descargas
         System.out.println("Número de descargas: " + libro.numeroDeDescargas());
         System.out.println("---\n");
     }
+
 
 
     public void muestraElMenu() {

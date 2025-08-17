@@ -31,9 +31,9 @@ spring.jpa.hibernate.ddl-auto=update
 
 4. Ejecutar el proyecto
 
-
-📖 Funcionalidades implementadas:
-Menú principal.
+---
+📖 Funcionalidades implementadas:  
+Menú principal.  
 Al iniciar la aplicación se despliega un menú con las siguientes opciones:
 
 1) Buscar libro por título:
@@ -57,8 +57,8 @@ Al iniciar la aplicación se despliega un menú con las siguientes opciones:
 
 6) Salir
 
-
-🗄️ Modelo de datos
+---
+🗄️ Modelo de datos  
 Entidad Libro:
   - id
   - titulo
@@ -72,22 +72,22 @@ Entidad Autor:
   - fechaDeFallecimiento
   - libros (relación uno-a-muchos con Libro)
 
-
+---
 📊 Ejemplo de uso
 <img width="416" height="148" alt="{5527F832-4CD2-496B-AAD1-2FEF4A1B6CC0}" src="https://github.com/user-attachments/assets/c49841ab-302d-4690-a856-26b6a30d7ecb" />
 
-
+---
 📌 Aprendizajes clave:
   - Consumo de APIs REST con Java
   - Manejo de JSON usando clases DTO
   - Persistencia de datos con Spring Data JPA y PostgreSQL
   - Uso de Derived Queries (countBy..., findBy...) para consultas personalizadas
 
-
+---
 👨‍💻 Autor
 
-Fernando González
-Estudiante de la Tecnicatura en Análisis de Sistemas
+Fernando González  
+Estudiante de la Tecnicatura en Análisis de Sistemas  
 Participante del programa ONE - Oracle Next Education
 
 

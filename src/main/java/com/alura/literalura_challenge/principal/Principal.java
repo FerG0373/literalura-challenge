@@ -109,6 +109,49 @@ public class Principal {
         }
     }
 
+    private void mostrarCantidadLibrosPorIdioma() {
+        System.out.println("Ingrese el idioma (ejemplo: 'en' para inglés, 'es' para español):");
+        String idioma = teclado.nextLine();
+
+        Long cantidad = libroRepositorio.countByIdioma(idioma);
+
+        if (cantidad > 0) {
+            System.out.println("Cantidad de libros en idioma '" + idioma + "': " + cantidad);
+        } else {
+            System.out.println("No hay libros registrados en idioma '" + idioma + "'.");
+        }
+    }
+
+    private void listarAutoresVivosEnAnio() {
+        System.out.println("Ingrese un año para buscar autores vivos:");
+        Integer anio = null;
+        try {
+            anio = Integer.parseInt(teclado.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Año inválido. Debe ingresar un número.");
+            return;
+        }
+
+        // Autores con fecha de fallecimiento posterior o igual al año
+        List<Autor> autoresConFallecimiento = autorRepositorio
+                .findByFechaDeNacimientoLessThanEqualAndFechaDeFallecimientoGreaterThanEqual(anio, anio);
+
+        // Autores que aún no tienen fallecimiento registrado
+        List<Autor> autoresSinFallecimiento = autorRepositorio
+                .findByFechaDeNacimientoLessThanEqualAndFechaDeFallecimientoIsNull(anio);
+
+        // Unimos las dos listas
+        autoresConFallecimiento.addAll(autoresSinFallecimiento);
+
+        if (autoresConFallecimiento.isEmpty()) {
+            System.out.println("No se encontraron autores vivos en el año " + anio);
+        } else {
+            System.out.println("--- AUTORES VIVOS EN " + anio + " ---");
+            autoresConFallecimiento.forEach(this::mostrarAutorFormateado);
+        }
+    }
+
+
     public void muestraElMenu() {
         var opcion = -1;
         while (opcion != 0) {
@@ -135,10 +178,10 @@ public class Principal {
                     listarAutoresRegistrados();
                     break;
                 case 4:
-
+                    listarAutoresVivosEnAnio();
                     break;
                 case 5:
-
+                    mostrarCantidadLibrosPorIdioma();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");

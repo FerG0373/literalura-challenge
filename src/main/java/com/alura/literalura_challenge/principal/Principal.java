@@ -4,6 +4,7 @@ import com.alura.literalura_challenge.model.Autor;
 import com.alura.literalura_challenge.model.DatosLibro;
 import com.alura.literalura_challenge.model.DatosRespuesta;
 import com.alura.literalura_challenge.model.Libro;
+import com.alura.literalura_challenge.repository.AutorRepository;
 import com.alura.literalura_challenge.repository.LibroRepository;
 import com.alura.literalura_challenge.service.ConsumoAPI;
 import com.alura.literalura_challenge.service.ConvierteDatos;
@@ -11,6 +12,7 @@ import com.alura.literalura_challenge.service.ConvierteDatos;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 
 public class Principal {
@@ -19,10 +21,12 @@ public class Principal {
     private ConsumoAPI consumoApi = new ConsumoAPI();
     private static final String URL_BASE = "https://gutendex.com/books/";
     private ConvierteDatos conversor = new ConvierteDatos();
-    private LibroRepository repositorio;
+    private LibroRepository libroRepositorio;
+    private AutorRepository autorRepositorio;
 
-    public Principal(LibroRepository repository) {
-        this.repositorio = repository;
+    public Principal(LibroRepository libroRepository, AutorRepository autorRepository) {
+        this.libroRepositorio = libroRepository;
+        this.autorRepositorio = autorRepository;
     }
 
 
@@ -45,7 +49,7 @@ public class Principal {
                 Autor autor = new Autor(libroBuscado.get().autor().get(0));
                 Libro libro = new Libro(libroBuscado.get());
                 libro.setAutor(autor);
-                repositorio.save(libro);
+                libroRepositorio.save(libro);
 
                 mostrarLibroFormateado(libro);
             } else {
@@ -76,12 +80,32 @@ public class Principal {
     }
 
     private void listarLibrosRegistrados() {
-        List<Libro> libros = repositorio.findAll();
+        List<Libro> libros = libroRepositorio.findAll();
         if (libros.isEmpty()) {
             System.out.println("No hay libros registrados.");
         } else {
             System.out.println("--- LIBROS REGISTRADOS ---");
             libros.forEach(this::mostrarLibroFormateado);
+        }
+    }
+
+    private void mostrarAutorFormateado(Autor autor) {
+        System.out.println("--- AUTOR ---");
+        System.out.println("Nombre: " + autor.getNombre());
+        System.out.println("Fecha de nacimiento: " + autor.getFechaDeNacimiento());
+        System.out.println("Fecha de fallecimiento: " + autor.getFechaDeFallecimiento());
+        System.out.println("Libros: " + autor.getLibros().stream()
+                .map(Libro::getTitulo).collect(Collectors.joining(", ")));
+        System.out.println("---\n");
+    }
+
+    private void listarAutoresRegistrados() {
+        List<Autor> autores = autorRepositorio.findAll();
+        if (autores.isEmpty()) {
+            System.out.println("No hay autores registrados.");
+        } else {
+            System.out.println("--- AUTORES REGISTRADOS ---");
+            autores.forEach(this::mostrarAutorFormateado);
         }
     }
 
@@ -108,7 +132,7 @@ public class Principal {
                     listarLibrosRegistrados();
                     break;
                 case 3:
-
+                    listarAutoresRegistrados();
                     break;
                 case 4:
 

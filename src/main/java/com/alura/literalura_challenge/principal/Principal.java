@@ -4,9 +4,11 @@ import com.alura.literalura_challenge.model.Autor;
 import com.alura.literalura_challenge.model.DatosLibro;
 import com.alura.literalura_challenge.model.DatosRespuesta;
 import com.alura.literalura_challenge.model.Libro;
+import com.alura.literalura_challenge.repository.LibroRepository;
 import com.alura.literalura_challenge.service.ConsumoAPI;
 import com.alura.literalura_challenge.service.ConvierteDatos;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -17,6 +19,11 @@ public class Principal {
     private ConsumoAPI consumoApi = new ConsumoAPI();
     private static final String URL_BASE = "https://gutendex.com/books/";
     private ConvierteDatos conversor = new ConvierteDatos();
+    private LibroRepository repositorio;
+
+    public Principal(LibroRepository repository) {
+        this.repositorio = repository;
+    }
 
 
     private void buscarLibroPorTitulo() {
@@ -38,6 +45,7 @@ public class Principal {
                 Autor autor = new Autor(libroBuscado.get().autor().get(0));
                 Libro libro = new Libro(libroBuscado.get());
                 libro.setAutor(autor);
+                repositorio.save(libro);
 
                 mostrarLibroFormateado(libro);
             } else {
@@ -67,6 +75,16 @@ public class Principal {
         System.out.println("---\n");
     }
 
+    private void listarLibrosRegistrados() {
+        List<Libro> libros = repositorio.findAll();
+        if (libros.isEmpty()) {
+            System.out.println("No hay libros registrados.");
+        } else {
+            System.out.println("--- LIBROS REGISTRADOS ---");
+            libros.forEach(this::mostrarLibroFormateado);
+        }
+    }
+
     public void muestraElMenu() {
         var opcion = -1;
         while (opcion != 0) {
@@ -87,7 +105,7 @@ public class Principal {
                     buscarLibroPorTitulo();
                     break;
                 case 2:
-
+                    listarLibrosRegistrados();
                     break;
                 case 3:
 
